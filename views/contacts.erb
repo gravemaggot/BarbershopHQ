@@ -1,4 +1,7 @@
 <h2>Контакты</h2>
 <p><a href="mailto:gravemaggot1@gmail.com">Задавайте вопросы по электронной почте</a></p>
-<p>Сообщение:</p>
-<p><textarea></textarea>
+<form action="/contacts" method="POST" role="form">
+    <p>Сообщение:</p>
+    <p><textarea class="form-control" name="content" value = "<%= @content %>"></textarea>
+    <p><button type="submit" class="btn btn-primary">Отправить</button></p>
+</form>

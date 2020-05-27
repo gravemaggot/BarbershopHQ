@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_173638) do
+ActiveRecord::Schema.define(version: 2020_05_27_175546) do
 
   create_table "barbers", force: :cascade do |t|
     t.text "name"
@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(version: 2020_05_26_173638) do
     t.text "datestamp"
     t.text "barber"
     t.text "color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
