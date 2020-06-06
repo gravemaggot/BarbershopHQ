@@ -30,15 +30,31 @@ end
 # Routes
 
 get '/' do
-	erb :index			
+  erb :index
 end
 
 get '/contacts' do
-	erb :contacts
+  erb :contacts
 end
 
 get '/visit' do
-    erb :visit
+  @newcl = Client.new
+  erb :visit
+end
+
+get '/barber/:id' do
+  @barber = Barber.find params[:id]
+  erb :barber
+end
+
+get '/clients' do
+  @clients = Client.order('created_at DESC').where('NOT datestamp IS NULL')
+  erb :clients
+end
+
+get '/client/:id' do
+  @client = Client.find params[:id]
+  erb :client
 end
 
 post '/visit' do

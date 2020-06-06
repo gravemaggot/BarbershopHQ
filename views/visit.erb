@@ -7,12 +7,12 @@
   </div>
   <div class="form-group">
     <label>Ваш телефон</label>
-    <input id = "phone" name = "client[phone]" type="text" class="form-control" placeholder="+375 (99) 999-99-99" value = "">
+    <input id = "phone" name = "client[phone]" type="text" class="form-control" placeholder="+375 (99) 999-99-99" value = "<%= @newcl.phone %>">
   </div>
   <div class="form-group">
     <label>Когда вас ждать?</label>
     <input id="datetimepicker" name = "client[datestamp]" type="date" class="form-control" placeholder="Введите дату и время"
-      autocomplete = "off" value = "">
+      autocomplete = "off" value = "<%= @newcl.datestamp %>">
   </div>
   <div class="form-group">
     <label>Ваш мастер</label>
