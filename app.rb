@@ -6,6 +6,8 @@ require 'sinatra/activerecord'
 
 set :database, "sqlite3:barbershop.db"
 
+# Классы объектов
+
 class Client < ActiveRecord::Base
 end
 
@@ -15,9 +17,13 @@ end
 class Feedback < ActiveRecord::Base
 end
 
+# Events
+
 before do
 	@barbers = Barber.all
 end
+
+# Routes
 
 get '/' do
 	erb :index			
@@ -32,36 +38,10 @@ get '/visit' do
 end
 
 post '/visit' do
-    @username  = params[:username]; 
-    @phone     = params[:phone];
-	@datetime  = params[:datetime];
-    @master    = params[:master];
-    @color     = params[:color];
+  newcl = Client.new params[:client]
+  newcl.save
 
-    @title     = 'Thanks you!';
-    @message   = "Dear #{@username}, we'll be waiting for you at #{@datetime}. Master: #{@master}. Color: #{@color}";
-
-   # Проверка заполнения
-   errPattern = {
-        :username   => 'Введите имя',
-        :phone      => 'Укажите телефон',
-        :datetime   => 'Не правильная дата визита'
-    };
-
-    @error = errPattern.select {|key,_| params[key] == ''}.values.join(", "); 
-
-    if @error != '' 
-        return erb :visit 
-    end;
-
-    # Запись в файл
-    if write_client(@username,@phone,@datetime,@master,@color) 
-        erb :message 
-    else
-        @error = 'Ошибка записи. Попробуйте еще раз.';
-        erb :visit 
-    end
-
+  erb '<h2>Спасибо, вы записались!</h2>'
 end
 
 post '/contacts' do
@@ -80,6 +60,8 @@ post '/contacts' do
     erb :contacts
   end
 end
+
+# DB writing
 
 def write_client(username,phone,datestamp,barber,color)
   Client.create  :name      => username, 
