@@ -9,6 +9,10 @@ set :database, "sqlite3:barbershop.db"
 # Классы объектов
 
 class Client < ActiveRecord::Base
+  validates :name,      presence: true
+  validates :phone,     presence: true
+  validates :datestamp, presence: true
+  validates :color,     presence: true
 end
 
 class Barber < ActiveRecord::Base
@@ -39,9 +43,13 @@ end
 
 post '/visit' do
   newcl = Client.new params[:client]
-  newcl.save
-
-  erb '<h2>Спасибо, вы записались!</h2>'
+  if newcl.save
+    @message = 'Спасибо. Вы записались!'
+    erb :message
+  else
+    @error = newcl.errors.full_messages.first
+    erb :visit
+  end
 end
 
 post '/contacts' do
