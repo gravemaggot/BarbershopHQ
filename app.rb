@@ -9,7 +9,7 @@ set :database, "sqlite3:barbershop.db"
 # Классы объектов
 
 class Client < ActiveRecord::Base
-  validates :name,      presence: true
+  validates :name,      presence: true, length: { minimum: 3 }
   validates :phone,     presence: true
   validates :datestamp, presence: true
   validates :color,     presence: true
@@ -42,12 +42,12 @@ get '/visit' do
 end
 
 post '/visit' do
-  newcl = Client.new params[:client]
-  if newcl.save
+  @newcl = Client.new params[:client]
+  if @newcl.save
     @message = 'Спасибо. Вы записались!'
     erb :message
   else
-    @error = newcl.errors.full_messages.first
+    @error = @newcl.errors.full_messages.first
     erb :visit
   end
 end
