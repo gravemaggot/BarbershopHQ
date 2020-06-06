@@ -1,13 +1,13 @@
-#encoding: utf-8
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/activerecord'
 
-set :database, "sqlite3:barbershop.db"
+set :database, 'sqlite3:barbershop.db'
 
-# Классы объектов
-
+# Classes
 class Client < ActiveRecord::Base
   validates :name,      presence: true, length: { minimum: 3 }
   validates :phone,     presence: true
@@ -24,7 +24,7 @@ end
 # Events
 
 before do
-	@barbers = Barber.all
+  @barbers = Barber.all
 end
 
 # Routes
@@ -87,16 +87,7 @@ end
 
 # DB writing
 
-def write_client(username,phone,datestamp,barber,color)
-  Client.create  :name      => username, 
-                 :phone     => phone,
-                 :datestamp => datestamp,
-                 :barber    => barber,
-                 :color     => color;
-    true
-end
-
 def write_feedback(content)
-  Feedback.create :content => content
+  Feedback.create content: content
   true
 end
